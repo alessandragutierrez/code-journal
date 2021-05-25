@@ -24,4 +24,5 @@ function saveEntryValues(event) {
     notes: notes.value
   };
   data.nextEntryId++;
+  data.entries.unshift(newEntry);
 }
