@@ -14,9 +14,19 @@ main {
   min-height: 100vh;
 }
 
-.header-text {
+.nav-div {
+  display: flex;
+}
+
+.nav-text {
   font-weight: normal;
   color: white;
+  align-self: center;
+}
+
+.nav-entries {
+  margin-left: 40px;
+  font-size: 26px;
 }
 
 .page-title {

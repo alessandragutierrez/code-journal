@@ -24,12 +24,17 @@
   }
 
   .column-full,
-  .column-half {
+  .column-half,
+  .nav-bar {
     padding: 0 0.75rem;
   }
 
   .column-half {
     width: 50%;
+  }
+
+  .col-one-fourth {
+    width: 25%;
   }
 
   .padding-left {
