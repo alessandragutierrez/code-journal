@@ -26,4 +26,7 @@ function saveEntryValues(event) {
   data.nextEntryId++;
   data.entries.unshift(newEntry);
   photo.setAttribute('src', 'images/placeholder-image-square.jpg');
+  photoUrl.value = '';
+  title.value = '';
+  notes.value = '';
 }
