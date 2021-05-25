@@ -23,4 +23,5 @@ function saveEntryValues(event) {
     title: title.value,
     notes: notes.value
   };
+  data.nextEntryId++;
 }
