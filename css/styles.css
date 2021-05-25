@@ -2,12 +2,15 @@
   font-family: 'Basic', sans-serif;
 }
 
+body {
+  background-color: rgb(240, 240, 240);
+}
+
 header {
   background-color: rgb(86, 43, 129);
 }
 
 main {
-  background-color: rgb(240, 240, 240);
   min-height: 100vh;
 }
 
@@ -16,7 +19,7 @@ main {
   color: white;
 }
 
-.new-entry {
+.page-title {
   letter-spacing: 2px;
   font-size: 44px;
 }
@@ -74,6 +77,32 @@ button {
   letter-spacing: 1px;
 }
 
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+.image-entry {
+  border-radius: 5px;
+  box-shadow: 1px 0 3px black;
+}
+
+.entry-title {
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.entry-note {
+  font-size: 20px;
+  font-family: sans-serif;
+  line-height: 2rem;
+  font-weight: 300;
+}
+
 .margin-bottom {
   margin-bottom: 40px;
+}
+
+.padding-bottom {
+  padding-bottom: 30px;
 }
