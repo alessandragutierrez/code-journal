@@ -1,37 +1,35 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
 /* global data */
 /* exported data */
-var entryForm = document.querySelector('.form');
-var photo = document.querySelector('img');
-var photoUrl = document.querySelector('.photoUrl');
-var title = document.querySelector('.title');
-var notes = document.querySelector('.notes');
+var $entryForm = document.querySelector('.form');
+var $photo = document.querySelector('img');
+var $photoUrl = document.querySelector('.photoUrl');
+var $title = document.querySelector('.title');
+var $notes = document.querySelector('.notes');
+var $ul = document.querySelector('ul');
+var i;
 
-photoUrl.addEventListener('input', updatePhoto);
-
+$photoUrl.addEventListener('input', updatePhoto);
 function updatePhoto(event) {
-  photo.setAttribute('src', photoUrl.value);
+  $photo.setAttribute('src', $photoUrl.value);
 }
 
-entryForm.addEventListener('submit', saveEntryValues);
-
+$entryForm.addEventListener('submit', saveEntryValues);
 function saveEntryValues(event) {
   event.preventDefault();
 
   var newEntry = {
     entryId: data.nextEntryId,
-    photoUrl: photoUrl.value,
-    title: title.value,
-    notes: notes.value
+    photoUrl: $photoUrl.value,
+    title: $title.value,
+    notes: $notes.value
   };
 
   data.nextEntryId++;
   data.entries.unshift(newEntry);
-  photo.setAttribute('src', 'images/placeholder-image-square.jpg');
-  photoUrl.value = '';
-  title.value = '';
-  notes.value = '';
+  $photo.setAttribute('src', 'images/placeholder-image-square.jpg');
+  $photoUrl.value = '';
+  $title.value = '';
+  $notes.value = '';
 }
 
 function renderEntry(newEntry) {
@@ -64,3 +62,10 @@ function renderEntry(newEntry) {
 
   return $li;
 }
+
+window.addEventListener('DOMContentLoaded', function (event) {
+  for (i = 0; i < data.entries.length; i++) {
+    var $entryValues = renderEntry(data.entries[i]);
+    $ul.appendChild($entryValues);
+  }
+});
