@@ -3,8 +3,8 @@
 var entryForm = document.querySelector('.form');
 var photo = document.querySelector('img');
 var photoUrl = document.querySelector('.photoUrl');
-var title = document.querySelector('.title-input');
-var notes = document.querySelector('.notes-input');
+var title = document.querySelector('.title');
+var notes = document.querySelector('.notes');
 
 photoUrl.addEventListener('input', updatePhoto);
 
