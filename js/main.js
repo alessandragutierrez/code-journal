@@ -16,13 +16,14 @@ entryForm.addEventListener('submit', saveEntryValues);
 
 function saveEntryValues(event) {
   event.preventDefault();
-  // eslint-disable-next-line no-unused-vars
+
   var newEntry = {
     entryId: data.nextEntryId,
     photoUrl: photoUrl.value,
     title: title.value,
     notes: notes.value
   };
+
   data.nextEntryId++;
   data.entries.unshift(newEntry);
   photo.setAttribute('src', 'images/placeholder-image-square.jpg');
