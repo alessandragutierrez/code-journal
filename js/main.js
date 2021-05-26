@@ -52,16 +52,24 @@ function renderEntry(newEntry) {
   var $divImage = document.createElement('div');
   $divImage.className = 'column-full column-half image-container margin-bottom';
 
-  var $divText = document.createElement('div');
-  $divText.className = 'column-full column-half padding-left';
-
   var $entryImage = document.createElement('img');
   $entryImage.className = 'entry-image';
   $entryImage.setAttribute('src', data.entries[i].photoUrl);
 
+  var $divText = document.createElement('div');
+  $divText.className = 'column-full column-half padding-left';
+
+  var $entryHeading = document.createElement('div');
+  $entryHeading.className = 'row entry-heading';
+
   var $entryTitle = document.createElement('h1');
-  $entryTitle.className = 'entry-title';
   $entryTitle.textContent = data.entries[i].title;
+
+  var $divEditIcon = document.createElement('div');
+  $divEditIcon.className = 'edit-icon';
+
+  var $editIcon = document.createElement('i');
+  $editIcon.className = 'fas fa-pen';
 
   var $entryNote = document.createElement('p');
   $entryNote.className = 'entry-note';
@@ -70,8 +78,11 @@ function renderEntry(newEntry) {
   $li.appendChild($divImage);
   $li.appendChild($divText);
   $divImage.appendChild($entryImage);
-  $divText.appendChild($entryTitle);
+  $divText.appendChild($entryHeading);
   $divText.appendChild($entryNote);
+  $entryHeading.appendChild($entryTitle);
+  $entryHeading.appendChild($divEditIcon);
+  $divEditIcon.appendChild($editIcon);
 
   return $li;
 }

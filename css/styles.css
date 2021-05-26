@@ -114,9 +114,19 @@ ul {
   box-shadow: 1px 0 3px black;
 }
 
-.entry-title {
+.entry-heading {
   letter-spacing: 2px;
   margin: 0;
+  justify-content: space-between;
+}
+
+.edit-icon {
+  align-self: center;
+  font-size: 32px;
+}
+
+.fa-pen {
+  color: rgb(86, 43, 129);
 }
 
 .entry-note {
