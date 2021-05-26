@@ -8,6 +8,7 @@ var $notes = document.querySelector('.notes');
 var $ul = document.querySelector('ul');
 var $viewElements = document.querySelectorAll('.view');
 var $entriesEmpty = document.querySelector('.entries-empty');
+var dataEntryId;
 var i;
 
 $photoUrl.addEventListener('input', updatePhoto);
@@ -48,6 +49,7 @@ function saveEntryValues(event) {
 function renderEntry(newEntry) {
   var $li = document.createElement('li');
   $li.className = 'row padding-bottom';
+  $li.setAttribute('data-entry-id', dataEntryId);
 
   var $divImage = document.createElement('div');
   $divImage.className = 'column-full column-half image-container margin-bottom';
@@ -88,9 +90,11 @@ function renderEntry(newEntry) {
 }
 
 window.addEventListener('DOMContentLoaded', function (event) {
+  dataEntryId = data.entries.length;
   for (i = 0; i < data.entries.length; i++) {
     var $entryValues = renderEntry(data.entries[i]);
     $ul.appendChild($entryValues);
+    dataEntryId--;
   }
 
   if (data.entries.length > 0) {
