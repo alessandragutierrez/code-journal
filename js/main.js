@@ -38,8 +38,11 @@ function saveEntryValues(event) {
       $viewElements[i].classList.add('hidden');
     } else $viewElements[i].classList.remove('hidden');
   }
-  data.view = 'entries';
-  location.reload();
+  swapViews('entries');
+  i = 0;
+  var $entryValues = renderEntry(data.entries[i]);
+  $ul.prepend($entryValues);
+  $entriesEmpty.classList.add('hidden');
 }
 
 function renderEntry(newEntry) {
@@ -83,24 +86,23 @@ window.addEventListener('DOMContentLoaded', function (event) {
     $entriesEmpty.classList.add('hidden');
   } else $entriesEmpty.classList.remove('hidden');
 
-  for (i = 0; i < $viewElements.length; i++) {
-    if ($viewElements[i].getAttribute('data-view') !== data.view) {
-      $viewElements[i].classList.add('hidden');
-    } else $viewElements[i].classList.remove('hidden');
-  }
+  swapViews(data.view);
 });
 
 document.addEventListener('click', function (event) {
   if (event.target.matches('.swap-view-button') !== true) {
     return;
   }
-  for (i = 0; i < $viewElements.length; i++) {
-    if ($viewElements[i].getAttribute('data-view') !== event.target.getAttribute('data-view')) {
-      $viewElements[i].classList.add('hidden');
+  swapViews(event.target.getAttribute('data-view'));
+});
 
+function swapViews(dataView) {
+  for (i = 0; i < $viewElements.length; i++) {
+    if ($viewElements[i].getAttribute('data-view') !== dataView) {
+      $viewElements[i].classList.add('hidden');
     } else {
       $viewElements[i].classList.remove('hidden');
       data.view = $viewElements[i].getAttribute('data-view');
     }
   }
-});
+}
