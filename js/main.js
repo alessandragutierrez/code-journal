@@ -117,3 +117,7 @@ function swapViews(dataView) {
     }
   }
 }
+
+$ul.addEventListener('click', function (event) {
+
+});
