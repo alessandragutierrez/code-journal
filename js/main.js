@@ -70,8 +70,6 @@ window.addEventListener('DOMContentLoaded', function (event) {
   }
 });
 
-//
-
 var $viewElements = document.querySelectorAll('.view');
 document.addEventListener('click', function (event) {
   if (event.target.matches('.swap-view-button') !== true) {
