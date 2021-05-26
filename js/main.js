@@ -119,5 +119,8 @@ function swapViews(dataView) {
 }
 
 $ul.addEventListener('click', function (event) {
-
+  if (event.target.matches('.fa-pen') !== true) {
+    return;
+  }
+  swapViews('entry-form');
 });

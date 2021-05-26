@@ -29,10 +29,6 @@ main {
   font-size: 26px;
 }
 
-.nav-entries:hover {
-  cursor: pointer;
-}
-
 .entries-title-bar {
   justify-content: space-between;
 }
@@ -100,10 +96,6 @@ button {
   letter-spacing: 1px;
 }
 
-button:hover {
-  cursor: pointer;
-}
-
 ul {
   padding: 0;
   margin: 0;
@@ -149,4 +141,10 @@ ul {
 
 .padding-bottom {
   padding-bottom: 30px;
+}
+
+.nav-entries:hover,
+button:hover,
+.fa-pen:hover {
+  cursor: pointer;
 }
