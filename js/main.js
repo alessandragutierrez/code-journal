@@ -7,6 +7,7 @@ var $title = document.querySelector('.title');
 var $notes = document.querySelector('.notes');
 var $ul = document.querySelector('ul');
 var $viewElements = document.querySelectorAll('.view');
+var $entriesEmpty = document.querySelector('.entries-empty');
 var i;
 
 $photoUrl.addEventListener('input', updatePhoto);
@@ -37,6 +38,8 @@ function saveEntryValues(event) {
       $viewElements[i].classList.add('hidden');
     } else $viewElements[i].classList.remove('hidden');
   }
+  data.view = 'entries';
+  location.reload();
 }
 
 function renderEntry(newEntry) {
@@ -75,6 +78,16 @@ window.addEventListener('DOMContentLoaded', function (event) {
     var $entryValues = renderEntry(data.entries[i]);
     $ul.appendChild($entryValues);
   }
+
+  if (data.entries.length > 0) {
+    $entriesEmpty.classList.add('hidden');
+  } else $entriesEmpty.classList.remove('hidden');
+
+  for (i = 0; i < $viewElements.length; i++) {
+    if ($viewElements[i].getAttribute('data-view') !== data.view) {
+      $viewElements[i].classList.add('hidden');
+    } else $viewElements[i].classList.remove('hidden');
+  }
 });
 
 document.addEventListener('click', function (event) {
@@ -84,6 +97,10 @@ document.addEventListener('click', function (event) {
   for (i = 0; i < $viewElements.length; i++) {
     if ($viewElements[i].getAttribute('data-view') !== event.target.getAttribute('data-view')) {
       $viewElements[i].classList.add('hidden');
-    } else $viewElements[i].classList.remove('hidden');
+
+    } else {
+      $viewElements[i].classList.remove('hidden');
+      data.view = $viewElements[i].getAttribute('data-view');
+    }
   }
 });

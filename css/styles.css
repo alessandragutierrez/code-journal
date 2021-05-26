@@ -126,6 +126,13 @@ ul {
   font-weight: 300;
 }
 
+.entries-empty {
+  text-align: center;
+  font-size: 24px;
+  font-family: sans-serif;
+  font-weight: 300;
+}
+
 .margin-bottom {
   margin-bottom: 40px;
 }
