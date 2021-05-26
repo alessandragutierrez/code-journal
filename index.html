@@ -23,13 +23,13 @@
           <h1 class="nav-text">Code Journal</h1>
         </div>
         <div class="nav-div">
-          <h2 class="nav-text nav-entries">Entries</h2>
+          <h2 data-view="entries" class="nav-text nav-entries swap-view-button">Entries</h2>
         </div>
       </div>
     </div>
   </header>
   <main>
-    <div data-view="entry-form" class="container form">
+    <div data-view="entry-form" class="view container form">
       <form>
         <div class="row">
           <div class="column-full">
@@ -60,10 +60,13 @@
         </div>
       </form>
     </div>
-    <div data-view="entries" class="container">
-      <div class="row">
-        <div class="column-full">
-          <h1 class="page-title">Entries</h1>
+    <div data-view="entries" class="view container">
+      <div class="row entries-title-bar">
+        <div>
+          <h1 class="entries-page-title">Entries</h1>
+        </div>
+        <div class="new-button-container">
+          <button data-view="entry-form" class="swap-view-button">NEW</button>
         </div>
       </div>
       <ul></ul>

@@ -25,7 +25,8 @@
 
   .column-full,
   .column-half,
-  .nav-bar {
+  .nav-bar,
+  .entries-title-bar {
     padding: 0 0.75rem;
   }
 

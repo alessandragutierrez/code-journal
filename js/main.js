@@ -69,3 +69,19 @@ window.addEventListener('DOMContentLoaded', function (event) {
     $ul.appendChild($entryValues);
   }
 });
+
+//
+
+var $viewElements = document.querySelectorAll('.view');
+document.addEventListener('click', function (event) {
+  if (event.target.matches('.swap-view-button') !== true) {
+    return;
+  }
+  for (i = 0; i < $viewElements.length; i++) {
+    if ($viewElements[i].getAttribute('data-view') !== event.target.getAttribute('data-view')) {
+      $viewElements[i].classList.add('hidden');
+    } else {
+      $viewElements[i].classList.remove('hidden');
+    }
+  }
+});

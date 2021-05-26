@@ -29,9 +29,22 @@ main {
   font-size: 26px;
 }
 
-.page-title {
+.nav-entries:hover {
+  cursor: pointer;
+}
+
+.entries-title-bar {
+  justify-content: space-between;
+}
+
+.entries-page-title {
   letter-spacing: 2px;
   font-size: 44px;
+}
+
+.new-button-container {
+  text-align: right;
+  align-self: center;
 }
 
 .image-container {
@@ -85,6 +98,10 @@ button {
   padding: 8px 24px;
   font-size: 22px;
   letter-spacing: 1px;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 ul {
