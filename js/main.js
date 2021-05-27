@@ -9,6 +9,7 @@ var $ul = document.querySelector('ul');
 var $viewElements = document.querySelectorAll('.view');
 var $entriesEmpty = document.querySelector('.entries-empty');
 var dataEntryId;
+var entryToEdit;
 var editedEntryIndex;
 var i;
 
@@ -22,6 +23,7 @@ function saveEntryValues(event) {
   event.preventDefault();
   if (data.editing !== null) {
     updateEntry();
+    replaceEntryOnPage();
   } else {
     createNewEntry();
     addEntryToPage();
@@ -35,6 +37,7 @@ $ul.addEventListener('click', function (event) {
     return;
   }
   swapViews('entry-form');
+  entryToEdit = event.target.closest('li');
   var eventTargetId = parseInt(event.target.closest('li').getAttribute('data-entry-id'));
   for (i = 0; i < data.entries.length; i++) {
     if (data.entries[i].entryId === eventTargetId) {
@@ -148,6 +151,12 @@ function updateEntry() {
 
   data.entries.splice(editedEntryIndex, 1, editedEntry);
   data.editing = null;
+}
+
+function replaceEntryOnPage() {
+  i = editedEntryIndex;
+  var entryValues = renderEntry(data.entries[i]);
+  $ul.replaceChild(entryValues, entryToEdit);
 }
 
 function swapViews(dataView) {
