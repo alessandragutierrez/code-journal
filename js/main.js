@@ -133,4 +133,12 @@ $ul.addEventListener('click', function (event) {
       data.editing = data.entries[i];
     }
   }
+  editEntry();
 });
+
+function editEntry() {
+  $photo.setAttribute('src', data.editing.photoUrl);
+  $title.value = data.editing.title;
+  $photoUrl.value = data.editing.photoUrl;
+  $notes.value = data.editing.notes;
+}
