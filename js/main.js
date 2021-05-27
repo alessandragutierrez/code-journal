@@ -12,7 +12,6 @@ var $pageTitle = document.querySelector('.page-title');
 var dataEntryId;
 var entryToEdit;
 var editedEntryIndex;
-var i;
 
 $photoUrl.addEventListener('input', updatePhoto);
 function updatePhoto(event) {
@@ -42,7 +41,7 @@ $ul.addEventListener('click', function (event) {
 
   entryToEdit = event.target.closest('li');
   var eventTargetId = parseInt(event.target.closest('li').getAttribute('data-entry-id'));
-  for (i = 0; i < data.entries.length; i++) {
+  for (var i = 0; i < data.entries.length; i++) {
     if (data.entries[i].entryId === eventTargetId) {
       data.editing = data.entries[i];
     }
@@ -60,7 +59,7 @@ document.addEventListener('click', function (event) {
 
 window.addEventListener('DOMContentLoaded', function (event) {
   dataEntryId = data.entries.length;
-  for (i = 0; i < data.entries.length; i++) {
+  for (var i = 0; i < data.entries.length; i++) {
     var entryValues = renderEntry(data.entries[i]);
     $ul.appendChild(entryValues);
     dataEntryId--;
@@ -164,13 +163,12 @@ function updateEntry() {
 }
 
 function replaceEntryOnPage() {
-  i = editedEntryIndex;
-  var entryValues = renderEntry(data.entries[i]);
+  var entryValues = renderEntry(data.entries[editedEntryIndex]);
   $ul.replaceChild(entryValues, entryToEdit);
 }
 
 function swapViews(dataView) {
-  for (i = 0; i < $viewElements.length; i++) {
+  for (var i = 0; i < $viewElements.length; i++) {
     if ($viewElements[i].getAttribute('data-view') !== dataView) {
       $viewElements[i].classList.add('hidden');
     } else {
