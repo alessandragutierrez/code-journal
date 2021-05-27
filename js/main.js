@@ -10,6 +10,7 @@ var $viewElements = document.querySelectorAll('.view');
 var $entriesEmpty = document.querySelector('.entries-empty');
 var $pageTitle = document.querySelector('.page-title');
 var $entryFormLastRow = document.querySelector('.last');
+var $delete = $entryFormLastRow.firstElementChild;
 var dataEntryId;
 var entryToEdit;
 var editedEntryIndex;
@@ -139,9 +140,15 @@ function addEntryToPage() {
 }
 
 function editEntryPage() {
-  $entryFormLastRow.firstElementChild.classList.remove('hidden');
-  $entryFormLastRow.lastElementChild.classList.remove('column-full');
-  $entryFormLastRow.lastElementChild.classList.add('column-half');
+  $delete.classList.remove('hidden');
+  $entryFormLastRow.lastElementChild.classList.remove('col-full-save-button');
+  $entryFormLastRow.lastElementChild.classList.add('col-half-save-button');
+}
+
+function hideEditEntryPage() {
+  $delete.classList.add('hidden');
+  $entryFormLastRow.lastElementChild.classList.remove('col-half-save-button');
+  $entryFormLastRow.lastElementChild.classList.add('col-full-save-button');
 }
 
 function editEntry() {
@@ -195,14 +202,19 @@ function resetEntryForm() {
   $notes.value = '';
 }
 
-function hideEditEntryPage() {
-  $entryFormLastRow.firstElementChild.classList.add('hidden');
-  $entryFormLastRow.lastElementChild.classList.remove('column-half');
-  $entryFormLastRow.lastElementChild.classList.add('column-full');
-}
-
 function hideEmptyEntriesPage() {
   if (data.entries.length > 0) {
     $entriesEmpty.classList.add('hidden');
   } else $entriesEmpty.classList.remove('hidden');
+}
+
+//
+
+$delete.addEventListener('click', openDeleteModal);
+
+function openDeleteModal(event) {
+  if (event.target.className !== 'delete') {
+    return;
+  }
+  $delete.nextElementSibling.classList.remove('hidden');
 }
