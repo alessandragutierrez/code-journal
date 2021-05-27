@@ -41,8 +41,8 @@ function saveEntryValues(event) {
   }
   swapViews('entries');
   i = 0;
-  var $entryValues = renderEntry(data.entries[i]);
-  $ul.prepend($entryValues);
+  var entryValues = renderEntry(data.entries[i]);
+  $ul.prepend(entryValues);
   $entriesEmpty.classList.add('hidden');
 }
 
@@ -92,8 +92,8 @@ function renderEntry(newEntry) {
 window.addEventListener('DOMContentLoaded', function (event) {
   dataEntryId = data.entries.length;
   for (i = 0; i < data.entries.length; i++) {
-    var $entryValues = renderEntry(data.entries[i]);
-    $ul.appendChild($entryValues);
+    var entryValues = renderEntry(data.entries[i]);
+    $ul.appendChild(entryValues);
     dataEntryId--;
   }
 
@@ -127,4 +127,10 @@ $ul.addEventListener('click', function (event) {
     return;
   }
   swapViews('entry-form');
+  var eventTargetId = parseInt(event.target.closest('li').getAttribute('data-entry-id'));
+  for (i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === eventTargetId) {
+      data.editing = data.entries[i];
+    }
+  }
 });
