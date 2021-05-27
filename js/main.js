@@ -9,6 +9,7 @@ var $ul = document.querySelector('ul');
 var $viewElements = document.querySelectorAll('.view');
 var $entriesEmpty = document.querySelector('.entries-empty');
 var dataEntryId;
+var editedEntryIndex;
 var i;
 
 $photoUrl.addEventListener('input', updatePhoto);
@@ -19,32 +20,47 @@ function updatePhoto(event) {
 $entryForm.addEventListener('submit', saveEntryValues);
 function saveEntryValues(event) {
   event.preventDefault();
-
-  var newEntry = {
-    entryId: data.nextEntryId,
-    photoUrl: $photoUrl.value,
-    title: $title.value,
-    notes: $notes.value
-  };
-
-  data.nextEntryId++;
-  data.entries.unshift(newEntry);
-  $photo.setAttribute('src', 'images/placeholder-image-square.jpg');
-  $photoUrl.value = '';
-  $title.value = '';
-  $notes.value = '';
-
-  for (i = 0; i < $viewElements.length; i++) {
-    if ($viewElements[i].getAttribute('data-view') !== 'entries') {
-      $viewElements[i].classList.add('hidden');
-    } else $viewElements[i].classList.remove('hidden');
+  if (data.editing !== null) {
+    updateEntry();
+  } else {
+    createNewEntry();
+    addEntryToPage();
   }
+  resetEntryForm();
   swapViews('entries');
-  i = 0;
-  var entryValues = renderEntry(data.entries[i]);
-  $ul.prepend(entryValues);
-  $entriesEmpty.classList.add('hidden');
 }
+
+$ul.addEventListener('click', function (event) {
+  if (event.target.matches('.fa-pen') !== true) {
+    return;
+  }
+  swapViews('entry-form');
+  var eventTargetId = parseInt(event.target.closest('li').getAttribute('data-entry-id'));
+  for (i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === eventTargetId) {
+      data.editing = data.entries[i];
+    }
+  }
+  editEntry();
+});
+
+document.addEventListener('click', function (event) {
+  if (event.target.matches('.swap-view-button') !== true) {
+    return;
+  }
+  swapViews(event.target.getAttribute('data-view'));
+});
+
+window.addEventListener('DOMContentLoaded', function (event) {
+  dataEntryId = data.entries.length;
+  for (i = 0; i < data.entries.length; i++) {
+    var entryValues = renderEntry(data.entries[i]);
+    $ul.appendChild(entryValues);
+    dataEntryId--;
+  }
+  hideEmptyEntriesPage();
+  swapViews(data.view);
+});
 
 function renderEntry(newEntry) {
   var $li = document.createElement('li');
@@ -89,27 +105,50 @@ function renderEntry(newEntry) {
   return $li;
 }
 
-window.addEventListener('DOMContentLoaded', function (event) {
-  dataEntryId = data.entries.length;
-  for (i = 0; i < data.entries.length; i++) {
-    var entryValues = renderEntry(data.entries[i]);
-    $ul.appendChild(entryValues);
-    dataEntryId--;
+function createNewEntry() {
+  var newEntry = {
+    entryId: data.nextEntryId,
+    photoUrl: $photoUrl.value,
+    title: $title.value,
+    notes: $notes.value
+  };
+
+  data.nextEntryId++;
+  data.entries.unshift(newEntry);
+}
+
+function addEntryToPage() {
+  i = 0;
+  var entryValues = renderEntry(data.entries[i]);
+  $ul.prepend(entryValues);
+  hideEmptyEntriesPage();
+}
+
+function editEntry() {
+  $photo.setAttribute('src', data.editing.photoUrl);
+  $title.value = data.editing.title;
+  $photoUrl.value = data.editing.photoUrl;
+  $notes.value = data.editing.notes;
+}
+
+function updateEntry() {
+  var editedEntryId = data.editing.entryId;
+
+  function findEntryIndex(index) {
+    return index.entryId === editedEntryId;
   }
+  editedEntryIndex = data.entries.findIndex(findEntryIndex);
 
-  if (data.entries.length > 0) {
-    $entriesEmpty.classList.add('hidden');
-  } else $entriesEmpty.classList.remove('hidden');
+  var editedEntry = {
+    entryId: editedEntryId,
+    photoUrl: $photoUrl.value,
+    title: $title.value,
+    notes: $notes.value
+  };
 
-  swapViews(data.view);
-});
-
-document.addEventListener('click', function (event) {
-  if (event.target.matches('.swap-view-button') !== true) {
-    return;
-  }
-  swapViews(event.target.getAttribute('data-view'));
-});
+  data.entries.splice(editedEntryIndex, 1, editedEntry);
+  data.editing = null;
+}
 
 function swapViews(dataView) {
   for (i = 0; i < $viewElements.length; i++) {
@@ -120,25 +159,18 @@ function swapViews(dataView) {
       data.view = $viewElements[i].getAttribute('data-view');
     }
   }
+  resetEntryForm();
 }
 
-$ul.addEventListener('click', function (event) {
-  if (event.target.matches('.fa-pen') !== true) {
-    return;
-  }
-  swapViews('entry-form');
-  var eventTargetId = parseInt(event.target.closest('li').getAttribute('data-entry-id'));
-  for (i = 0; i < data.entries.length; i++) {
-    if (data.entries[i].entryId === eventTargetId) {
-      data.editing = data.entries[i];
-    }
-  }
-  editEntry();
-});
+function resetEntryForm() {
+  $photo.setAttribute('src', 'images/placeholder-image-square.jpg');
+  $photoUrl.value = '';
+  $title.value = '';
+  $notes.value = '';
+}
 
-function editEntry() {
-  $photo.setAttribute('src', data.editing.photoUrl);
-  $title.value = data.editing.title;
-  $photoUrl.value = data.editing.photoUrl;
-  $notes.value = data.editing.notes;
+function hideEmptyEntriesPage() {
+  if (data.entries.length > 0) {
+    $entriesEmpty.classList.add('hidden');
+  } else $entriesEmpty.classList.remove('hidden');
 }
