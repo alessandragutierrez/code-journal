@@ -29,10 +29,6 @@ main {
   font-size: 26px;
 }
 
-.nav-entries:hover {
-  cursor: pointer;
-}
-
 .entries-title-bar {
   justify-content: space-between;
 }
@@ -100,10 +96,6 @@ button {
   letter-spacing: 1px;
 }
 
-button:hover {
-  cursor: pointer;
-}
-
 ul {
   padding: 0;
   margin: 0;
@@ -114,9 +106,19 @@ ul {
   box-shadow: 1px 0 3px black;
 }
 
-.entry-title {
+.entry-heading {
   letter-spacing: 2px;
   margin: 0;
+  justify-content: space-between;
+}
+
+.edit-icon {
+  align-self: center;
+  font-size: 32px;
+}
+
+.fa-pen {
+  color: rgb(86, 43, 129);
 }
 
 .entry-note {
@@ -139,4 +141,10 @@ ul {
 
 .padding-bottom {
   padding-bottom: 30px;
+}
+
+.nav-entries:hover,
+button:hover,
+.fa-pen:hover {
+  cursor: pointer;
 }
