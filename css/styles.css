@@ -121,6 +121,19 @@ ul {
   color: rgb(86, 43, 129);
 }
 
+.delete-container {
+  margin: 30px 0;
+  align-self: center;
+}
+
+.delete {
+  font-size: 22px;
+  font-family: sans-serif;
+  letter-spacing: 1px;
+  color: red;
+  text-decoration: underline;
+}
+
 .entry-note {
   font-size: 20px;
   font-family: sans-serif;

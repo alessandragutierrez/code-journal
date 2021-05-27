@@ -9,6 +9,7 @@ var $ul = document.querySelector('ul');
 var $viewElements = document.querySelectorAll('.view');
 var $entriesEmpty = document.querySelector('.entries-empty');
 var $pageTitle = document.querySelector('.page-title');
+var $entryFormLastRow = document.querySelector('.last');
 var dataEntryId;
 var entryToEdit;
 var editedEntryIndex;
@@ -46,6 +47,7 @@ $ul.addEventListener('click', function (event) {
       data.editing = data.entries[i];
     }
   }
+  editEntryPage();
   editEntry();
 });
 
@@ -136,6 +138,12 @@ function addEntryToPage() {
   hideEmptyEntriesPage();
 }
 
+function editEntryPage() {
+  $entryFormLastRow.firstElementChild.classList.remove('hidden');
+  $entryFormLastRow.lastElementChild.classList.remove('column-full');
+  $entryFormLastRow.lastElementChild.classList.add('column-half');
+}
+
 function editEntry() {
   $photo.setAttribute('src', data.editing.photoUrl);
   $title.value = data.editing.title;
@@ -177,6 +185,7 @@ function swapViews(dataView) {
     }
   }
   resetEntryForm();
+  hideEditEntryPage();
 }
 
 function resetEntryForm() {
@@ -184,6 +193,12 @@ function resetEntryForm() {
   $photoUrl.value = '';
   $title.value = '';
   $notes.value = '';
+}
+
+function hideEditEntryPage() {
+  $entryFormLastRow.firstElementChild.classList.add('hidden');
+  $entryFormLastRow.lastElementChild.classList.remove('column-half');
+  $entryFormLastRow.lastElementChild.classList.add('column-full');
 }
 
 function hideEmptyEntriesPage() {
