@@ -10,6 +10,7 @@ var $viewElements = document.querySelectorAll('.view');
 var $entriesEmpty = document.querySelector('.entries-empty');
 var $pageTitle = document.querySelector('.page-title');
 var $entryFormLastRow = document.querySelector('.last');
+var $deleteModal = document.querySelector('.delete-modal');
 var $delete = $entryFormLastRow.firstElementChild;
 var dataEntryId;
 var entryToEdit;
@@ -211,10 +212,17 @@ function hideEmptyEntriesPage() {
 //
 
 $delete.addEventListener('click', openDeleteModal);
-
 function openDeleteModal(event) {
   if (event.target.className !== 'delete') {
     return;
   }
-  $delete.nextElementSibling.classList.remove('hidden');
+  $deleteModal.classList.remove('hidden');
+}
+
+$deleteModal.addEventListener('click', cancelDelete);
+function cancelDelete(event) {
+  if (event.target.className !== 'cancel-delete-button') {
+    return;
+  }
+  $deleteModal.classList.add('hidden');
 }
