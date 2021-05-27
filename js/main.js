@@ -8,6 +8,7 @@ var $notes = document.querySelector('.notes');
 var $ul = document.querySelector('ul');
 var $viewElements = document.querySelectorAll('.view');
 var $entriesEmpty = document.querySelector('.entries-empty');
+var $pageTitle = document.querySelector('.page-title');
 var dataEntryId;
 var entryToEdit;
 var editedEntryIndex;
@@ -37,6 +38,8 @@ $ul.addEventListener('click', function (event) {
     return;
   }
   swapViews('entry-form');
+  $pageTitle.textContent = 'Edit Entry';
+
   entryToEdit = event.target.closest('li');
   var eventTargetId = parseInt(event.target.closest('li').getAttribute('data-entry-id'));
   for (i = 0; i < data.entries.length; i++) {
@@ -52,6 +55,7 @@ document.addEventListener('click', function (event) {
     return;
   }
   swapViews(event.target.getAttribute('data-view'));
+  newEntryPage();
 });
 
 window.addEventListener('DOMContentLoaded', function (event) {
@@ -106,6 +110,13 @@ function renderEntry(newEntry) {
   $divEditIcon.appendChild($editIcon);
 
   return $li;
+}
+
+function newEntryPage() {
+  if (event.target.closest('div').className !== 'new-button-container') {
+    return;
+  }
+  $pageTitle.textContent = 'New Entry';
 }
 
 function createNewEntry() {
