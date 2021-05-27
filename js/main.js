@@ -75,7 +75,7 @@ function renderEntry(newEntry) {
 
   var $entryImage = document.createElement('img');
   $entryImage.className = 'entry-image';
-  $entryImage.setAttribute('src', data.entries[i].photoUrl);
+  $entryImage.setAttribute('src', newEntry.photoUrl);
 
   var $divText = document.createElement('div');
   $divText.className = 'column-full column-half padding-left';
@@ -84,7 +84,7 @@ function renderEntry(newEntry) {
   $entryHeading.className = 'row entry-heading';
 
   var $entryTitle = document.createElement('h1');
-  $entryTitle.textContent = data.entries[i].title;
+  $entryTitle.textContent = newEntry.title;
 
   var $divEditIcon = document.createElement('div');
   $divEditIcon.className = 'edit-icon';
@@ -94,7 +94,7 @@ function renderEntry(newEntry) {
 
   var $entryNote = document.createElement('p');
   $entryNote.className = 'entry-note';
-  $entryNote.textContent = data.entries[i].notes;
+  $entryNote.textContent = newEntry.notes;
 
   $li.appendChild($divImage);
   $li.appendChild($divText);
@@ -121,8 +121,7 @@ function createNewEntry() {
 }
 
 function addEntryToPage() {
-  i = 0;
-  var entryValues = renderEntry(data.entries[i]);
+  var entryValues = renderEntry(data.entries[0]);
   $ul.prepend(entryValues);
   hideEmptyEntriesPage();
 }
