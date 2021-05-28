@@ -53,6 +53,19 @@ $ul.addEventListener('click', function (event) {
   editEntry();
 });
 
+$delete.addEventListener('click', openDeleteModal);
+function openDeleteModal(event) {
+  if (event.target.className !== 'delete') {
+    return;
+  }
+  $deleteModal.classList.remove('hidden');
+}
+
+$deleteModal.addEventListener('click', function (event) {
+  cancelDelete();
+  confirmDelete();
+});
+
 document.addEventListener('click', function (event) {
   if (event.target.matches('.swap-view-button') !== true) {
     return;
@@ -190,47 +203,6 @@ function replaceEntryOnPage() {
   $ul.replaceChild(entryValues, entryToEdit);
 }
 
-function swapViews(dataView) {
-  for (var i = 0; i < $viewElements.length; i++) {
-    if ($viewElements[i].getAttribute('data-view') !== dataView) {
-      $viewElements[i].classList.add('hidden');
-    } else {
-      $viewElements[i].classList.remove('hidden');
-      data.view = $viewElements[i].getAttribute('data-view');
-    }
-  }
-  resetEntryForm();
-  hideEditEntryPage();
-}
-
-function resetEntryForm() {
-  $photo.setAttribute('src', 'images/placeholder-image-square.jpg');
-  $photoUrl.value = '';
-  $title.value = '';
-  $notes.value = '';
-}
-
-function hideEmptyEntriesPage() {
-  if (data.entries.length > 0) {
-    $entriesEmpty.classList.add('hidden');
-  } else $entriesEmpty.classList.remove('hidden');
-}
-
-//
-
-$delete.addEventListener('click', openDeleteModal);
-function openDeleteModal(event) {
-  if (event.target.className !== 'delete') {
-    return;
-  }
-  $deleteModal.classList.remove('hidden');
-}
-
-$deleteModal.addEventListener('click', function (event) {
-  cancelDelete();
-  confirmDelete();
-});
-
 function cancelDelete() {
   if (event.target.className !== 'cancel-delete-button') {
     return;
@@ -261,4 +233,30 @@ function resetEntryIds() {
     ulChildren[i].setAttribute('data-entry-id', dataEntryId);
     dataEntryId = (dataEntryId - 1);
   }
+}
+
+function resetEntryForm() {
+  $photo.setAttribute('src', 'images/placeholder-image-square.jpg');
+  $photoUrl.value = '';
+  $title.value = '';
+  $notes.value = '';
+}
+
+function swapViews(dataView) {
+  for (var i = 0; i < $viewElements.length; i++) {
+    if ($viewElements[i].getAttribute('data-view') !== dataView) {
+      $viewElements[i].classList.add('hidden');
+    } else {
+      $viewElements[i].classList.remove('hidden');
+      data.view = $viewElements[i].getAttribute('data-view');
+    }
+  }
+  resetEntryForm();
+  hideEditEntryPage();
+}
+
+function hideEmptyEntriesPage() {
+  if (data.entries.length > 0) {
+    $entriesEmpty.classList.add('hidden');
+  } else $entriesEmpty.classList.remove('hidden');
 }
