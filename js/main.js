@@ -62,12 +62,7 @@ document.addEventListener('click', function (event) {
 });
 
 window.addEventListener('DOMContentLoaded', function (event) {
-  dataEntryId = data.entries.length;
-  for (var i = 0; i < data.entries.length; i++) {
-    var entryValues = renderEntry(data.entries[i]);
-    $ul.appendChild(entryValues);
-    dataEntryId--;
-  }
+  addEntryIdToElements();
   hideEmptyEntriesPage();
   swapViews(data.view);
 });
@@ -115,6 +110,15 @@ function renderEntry(newEntry) {
   return $li;
 }
 
+function addEntryIdToElements() {
+  dataEntryId = data.entries.length;
+  for (var i = 0; i < data.entries.length; i++) {
+    var entryValues = renderEntry(data.entries[i]);
+    $ul.appendChild(entryValues);
+    dataEntryId--;
+  }
+}
+
 function newEntryPage() {
   if (event.target.closest('div').className !== 'new-button-container') {
     return;
@@ -135,6 +139,7 @@ function createNewEntry() {
 }
 
 function addEntryToPage() {
+  dataEntryId = data.entries.length;
   var entryValues = renderEntry(data.entries[0]);
   $ul.prepend(entryValues);
   hideEmptyEntriesPage();
@@ -160,15 +165,9 @@ function editEntry() {
 }
 
 function updateEntry() {
-  var editedEntryId = data.editing.entryId;
-
-  function findEntryIndex(index) {
-    return index.entryId === editedEntryId;
-  }
-  editedEntryIndex = data.entries.findIndex(findEntryIndex);
-
+  findEntryIndex();
   var editedEntry = {
-    entryId: editedEntryId,
+    entryId: dataEntryId,
     photoUrl: $photoUrl.value,
     title: $title.value,
     notes: $notes.value
@@ -176,6 +175,14 @@ function updateEntry() {
 
   data.entries.splice(editedEntryIndex, 1, editedEntry);
   data.editing = null;
+}
+
+function findEntryIndex() {
+  dataEntryId = data.editing.entryId;
+  function indexCondition(index) {
+    return index.entryId === dataEntryId;
+  }
+  editedEntryIndex = data.entries.findIndex(indexCondition);
 }
 
 function replaceEntryOnPage() {
@@ -219,10 +226,38 @@ function openDeleteModal(event) {
   $deleteModal.classList.remove('hidden');
 }
 
-$deleteModal.addEventListener('click', cancelDelete);
-function cancelDelete(event) {
+$deleteModal.addEventListener('click', function (event) {
+  cancelDelete();
+  confirmDelete();
+});
+
+function cancelDelete() {
   if (event.target.className !== 'cancel-delete-button') {
     return;
   }
   $deleteModal.classList.add('hidden');
+}
+
+function confirmDelete() {
+  if (event.target.className !== 'confirm-delete-button') {
+    return;
+  }
+  $deleteModal.classList.add('hidden');
+  findEntryIndex();
+  data.entries.splice(editedEntryIndex, 1);
+  entryToEdit.remove();
+  data.editing = null;
+  resetEntryForm();
+  resetEntryIds();
+  data.nextEntryId = (data.nextEntryId - 1);
+}
+
+function resetEntryIds() {
+  dataEntryId = data.entries.length;
+  var ulChildren = $ul.children;
+  for (var i = 0; i < data.entries.length; i++) {
+    data.entries[i].entryId = dataEntryId;
+    ulChildren[i].setAttribute('data-entry-id', dataEntryId);
+    dataEntryId = (dataEntryId - 1);
+  }
 }
