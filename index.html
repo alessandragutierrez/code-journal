@@ -53,9 +53,12 @@
             <textarea class="notes"></textarea>
           </div>
         </div>
-        <div class="row">
-          <div class="column-full save-button-container">
-            <button data-view="entries">SAVE</button>
+        <div class="row last">
+          <div class="col-half-delete delete-container hidden">
+            <span class="delete">Delete Entry</span>
+          </div>
+          <div class="col-full-save-button save-button-container">
+            <button data-view="entries" class="save-button">SAVE</button>
           </div>
         </div>
       </form>
@@ -66,7 +69,7 @@
           <h1 class="entries-page-title">Entries</h1>
         </div>
         <div class="new-button-container">
-          <button data-view="entry-form" class="swap-view-button">NEW</button>
+          <button data-view="entry-form" class="swap-view-button new-button">NEW</button>
         </div>
       </div>
       <div>
@@ -76,6 +79,19 @@
       </ul>
     </div>
   </main>
+  <div class="delete-modal hidden">
+    <div class="delete-confirmation-box">
+      <div class="row delete-entry-text">
+        <p class="delete-entry-text">
+          Are you sure you want to delete this entry&quest;
+        </p>
+      </div>
+      <div class="row delete-entry-buttons">
+        <button class="cancel-delete-button">CANCEL</button>
+        <button class="confirm-delete-button">CONFIRM</button>
+      </div>
+    </div>
+  </div>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
 </body>

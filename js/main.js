@@ -9,6 +9,9 @@ var $ul = document.querySelector('ul');
 var $viewElements = document.querySelectorAll('.view');
 var $entriesEmpty = document.querySelector('.entries-empty');
 var $pageTitle = document.querySelector('.page-title');
+var $entryFormLastRow = document.querySelector('.last');
+var $deleteModal = document.querySelector('.delete-modal');
+var $delete = $entryFormLastRow.firstElementChild;
 var dataEntryId;
 var entryToEdit;
 var editedEntryIndex;
@@ -46,7 +49,21 @@ $ul.addEventListener('click', function (event) {
       data.editing = data.entries[i];
     }
   }
+  editEntryPage();
   editEntry();
+});
+
+$delete.addEventListener('click', openDeleteModal);
+function openDeleteModal(event) {
+  if (event.target.className !== 'delete') {
+    return;
+  }
+  $deleteModal.classList.remove('hidden');
+}
+
+$deleteModal.addEventListener('click', function (event) {
+  cancelDelete();
+  confirmDelete();
 });
 
 document.addEventListener('click', function (event) {
@@ -58,12 +75,7 @@ document.addEventListener('click', function (event) {
 });
 
 window.addEventListener('DOMContentLoaded', function (event) {
-  dataEntryId = data.entries.length;
-  for (var i = 0; i < data.entries.length; i++) {
-    var entryValues = renderEntry(data.entries[i]);
-    $ul.appendChild(entryValues);
-    dataEntryId--;
-  }
+  addEntryIdToElements();
   hideEmptyEntriesPage();
   swapViews(data.view);
 });
@@ -111,6 +123,15 @@ function renderEntry(newEntry) {
   return $li;
 }
 
+function addEntryIdToElements() {
+  dataEntryId = data.entries.length;
+  for (var i = 0; i < data.entries.length; i++) {
+    var entryValues = renderEntry(data.entries[i]);
+    $ul.appendChild(entryValues);
+    dataEntryId--;
+  }
+}
+
 function newEntryPage() {
   if (event.target.closest('div').className !== 'new-button-container') {
     return;
@@ -131,9 +152,22 @@ function createNewEntry() {
 }
 
 function addEntryToPage() {
+  dataEntryId = data.entries.length;
   var entryValues = renderEntry(data.entries[0]);
   $ul.prepend(entryValues);
   hideEmptyEntriesPage();
+}
+
+function editEntryPage() {
+  $delete.classList.remove('hidden');
+  $entryFormLastRow.lastElementChild.classList.remove('col-full-save-button');
+  $entryFormLastRow.lastElementChild.classList.add('col-half-save-button');
+}
+
+function hideEditEntryPage() {
+  $delete.classList.add('hidden');
+  $entryFormLastRow.lastElementChild.classList.remove('col-half-save-button');
+  $entryFormLastRow.lastElementChild.classList.add('col-full-save-button');
 }
 
 function editEntry() {
@@ -144,15 +178,9 @@ function editEntry() {
 }
 
 function updateEntry() {
-  var editedEntryId = data.editing.entryId;
-
-  function findEntryIndex(index) {
-    return index.entryId === editedEntryId;
-  }
-  editedEntryIndex = data.entries.findIndex(findEntryIndex);
-
+  findEntryIndex();
   var editedEntry = {
-    entryId: editedEntryId,
+    entryId: dataEntryId,
     photoUrl: $photoUrl.value,
     title: $title.value,
     notes: $notes.value
@@ -162,9 +190,56 @@ function updateEntry() {
   data.editing = null;
 }
 
+function findEntryIndex() {
+  dataEntryId = data.editing.entryId;
+  function indexCondition(index) {
+    return index.entryId === dataEntryId;
+  }
+  editedEntryIndex = data.entries.findIndex(indexCondition);
+}
+
 function replaceEntryOnPage() {
   var entryValues = renderEntry(data.entries[editedEntryIndex]);
   $ul.replaceChild(entryValues, entryToEdit);
+}
+
+function cancelDelete() {
+  if (event.target.className !== 'cancel-delete-button') {
+    return;
+  }
+  $deleteModal.classList.add('hidden');
+}
+
+function confirmDelete() {
+  if (event.target.className !== 'confirm-delete-button') {
+    return;
+  }
+  $deleteModal.classList.add('hidden');
+  findEntryIndex();
+  data.entries.splice(editedEntryIndex, 1);
+  entryToEdit.remove();
+  data.editing = null;
+  resetEntryForm();
+  resetEntryIds();
+  swapViews('entries');
+  data.nextEntryId = (data.nextEntryId - 1);
+}
+
+function resetEntryIds() {
+  dataEntryId = data.entries.length;
+  var ulChildren = $ul.children;
+  for (var i = 0; i < data.entries.length; i++) {
+    data.entries[i].entryId = dataEntryId;
+    ulChildren[i].setAttribute('data-entry-id', dataEntryId);
+    dataEntryId = (dataEntryId - 1);
+  }
+}
+
+function resetEntryForm() {
+  $photo.setAttribute('src', 'images/placeholder-image-square.jpg');
+  $photoUrl.value = '';
+  $title.value = '';
+  $notes.value = '';
 }
 
 function swapViews(dataView) {
@@ -177,13 +252,7 @@ function swapViews(dataView) {
     }
   }
   resetEntryForm();
-}
-
-function resetEntryForm() {
-  $photo.setAttribute('src', 'images/placeholder-image-square.jpg');
-  $photoUrl.value = '';
-  $title.value = '';
-  $notes.value = '';
+  hideEditEntryPage();
 }
 
 function hideEmptyEntriesPage() {

@@ -26,7 +26,10 @@
   .column-full,
   .column-half,
   .nav-bar,
-  .entries-title-bar {
+  .entries-title-bar,
+  .col-full-save-button,
+  .col-half-save-button,
+  .col-half-delete {
     padding: 0 0.75rem;
   }
 
@@ -41,4 +44,16 @@
   .padding-left {
     padding-left: 35px;
   }
+}
+
+.col-full-save-button {
+  width: 100%;
+}
+
+.col-half-save-button {
+  width: 50%;
+}
+
+.col-half-delete {
+  width: 50%;
 }
