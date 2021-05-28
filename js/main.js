@@ -249,6 +249,7 @@ function confirmDelete() {
   data.editing = null;
   resetEntryForm();
   resetEntryIds();
+  swapViews('entries');
   data.nextEntryId = (data.nextEntryId - 1);
 }
 
